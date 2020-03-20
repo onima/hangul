@@ -1,0 +1,10 @@
+letters:
+  giyeok:
+    initial: 'g/k'
+    final: 'k'
+  nieun:
+    initial: 'n'
+    final: 'n'
+  digeut:
+    initial: 'd/t'
+    final: 't'
