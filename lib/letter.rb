@@ -16,5 +16,17 @@ class Letter
         x: @width - 40,
         y: -270
     )
+    @exploded = false
+  end
+
+  def explode
+    boom.play
+    image.remove
+    @exploded = true
+    self
+  end
+
+  def exploded?
+    @exploded
   end
 end
