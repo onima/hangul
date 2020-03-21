@@ -7,8 +7,8 @@ class OnscreenLetters
     @letters = []
   end
 
-  def retrieve_letter(user_guess)
-    letters.find(-> { FakeLetter.new }) { |l| l.image.x >= 0 && l.image.y >= 0 && (user_guess == l.initial || user_guess == l.final) }
+  def fetch_potential_matching_letter(guess:)
+    letters.find(-> { FakeLetter.new }) { |l| l.image.x >= 0 && l.image.y >= 0 && (guess == l.name) }
   end
 
   def delete(letter)
@@ -24,8 +24,6 @@ class OnscreenLetters
   end
 
   def each(&block)
-    @letters.each do |letter|
-      block.call(letter)
-    end
+    @letters.each { |l| block.call(l) }
   end
 end
