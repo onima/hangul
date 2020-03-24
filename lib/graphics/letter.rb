@@ -6,7 +6,7 @@ module Graphics
     end
 
     def name(name:)
-      Image.new("assets/images/#{name}.png", width: 50, height: 50, x: @width, y: -250)
+      Image.new("assets/images/#{name}.png", width: 55, height: 55, x: @width, y: -250)
     end
 
     def boom

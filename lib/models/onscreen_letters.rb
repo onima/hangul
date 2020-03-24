@@ -16,7 +16,7 @@ class OnscreenLetters
   end
 
   def clear
-    @letters.clear
+    @letters.each { |l| l.image.remove }
   end
 
   def <<(letter)
