@@ -2,6 +2,8 @@ require 'ruby2d'
 
 class GameMaster
 
+  attr_reader :game_state
+
   def initialize
     setup_general_graphics
     setup_game_state
@@ -14,6 +16,13 @@ class GameMaster
     delete_matched_letter(matching_letter)
   end
 
+  def restart_game
+    @general_graphics.remove_all
+    @game_state.onscreen_letters.clear
+    setup_general_graphics
+    setup_game_state
+  end
+
   def add_new_letter_on_screen
     @game_state.onscreen_letters << @game_state.alphabet.sample
   end
@@ -23,15 +32,21 @@ class GameMaster
   end
 
   def when_game_on(&callback)
-    callback.call if @game_on
+    callback.call if @game_state.game_on
   end
 
   def when_game_over(&callback)
-    if onscreen_letter_overtake_player?
-      @game_state.onscreen_letters.clear
-      @game_on = false
-      @general_graphics.game_over
-    end
+    callback.call if !@game_state.game_on
+  end
+
+  def onscreen_letter_overtake_player?
+    @game_state.onscreen_letters.any? { |l| l.image.y > 800 }
+  end
+
+  def game_over
+    @game_state.game_on = false
+    @general_graphics.game_over
+    @general_graphics.restart
   end
 
   private
@@ -45,10 +60,6 @@ class GameMaster
     @game_state.onscreen_letters.delete(letter)
   end
 
-  def onscreen_letter_overtake_player?
-    @game_state.onscreen_letters.any? { |l| l.image.y > 800 }
-  end
-
   def setup_general_graphics
     @general_graphics = Graphics::General.new
     @general_graphics.landscape
@@ -57,7 +68,7 @@ class GameMaster
   end
 
   def setup_game_state
-    @game_state = GameState.new(score: @general_graphics.score.text)
+    @game_state = GameState.new(score: 0)
     @game_on = true
   end
 end
