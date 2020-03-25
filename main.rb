@@ -8,6 +8,7 @@ require_relative 'lib/models/game_state'
 require_relative 'lib/models/onscreen_letters'
 require_relative 'lib/graphics/general'
 require_relative 'lib/graphics/letter'
+require_relative 'lib/graphics/guess'
 
 set title: 'Hangul', background: 'white', width: 1200, height: 800
 
@@ -16,7 +17,6 @@ set title: 'Hangul', background: 'white', width: 1200, height: 800
 ##
 
 game_master = GameMaster.new
-user_guess = ''
 
 ##
 # Event handling
@@ -24,14 +24,19 @@ user_guess = ''
 
 ALPHABET_INPUT = -> (i) { "abcdefghijklmnopqrstuvwxyz".split('').include?(i) }
 RETURN_INPUT = -> (i) { i == 'return' }
+BACKSPACE_INPUT = -> (i) { i == 'backspace' }
 
 on :key_down do |event|
+  puts event
   game_master.when_game_on do
     case event.key
-    when ALPHABET_INPUT then user_guess << event.key
+    when ALPHABET_INPUT
+      Graphics::Guess.input(event.key)
     when RETURN_INPUT
-      game_master.verify_guess(guess: user_guess)
-      user_guess = ''
+      game_master.verify_guess(guess: Graphics::Guess.to_s)
+      Graphics::Guess.clear
+    when BACKSPACE_INPUT
+      Graphics::Guess.remove_last_letter
     end
   end
 
