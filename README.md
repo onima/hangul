@@ -1,5 +1,5 @@
 ## Hangul Beta
-This project was done using ruby2D gem [ruby 2D gem](http://www.ruby2d.com/). This game is no longer developped because I'm currently rewriting it in javascript / vue.js.
+This project was done using [ruby 2D gem](http://www.ruby2d.com/). This game is no longer developped because I'm currently rewriting it in javascript / vue.js.
 
 The purpose of this game is to learn korean alphabet.
  * Guess each korean alphabet letter displayed on screen by typing the equivalent roman letter and press enter </p>
